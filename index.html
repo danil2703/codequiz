@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coding Quiz Challenge</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <style>
+
+    </style>
+
+    <div class="row" style="border: blueviolet 1px solid;">
+        <div class="col-10" style="border: red 1px solid;">
+            <nav class="navbar navbar-light bg-light">
+                <a class="nav-links" href="javascript:highscore();" id="highscoreLink">View High Scores</a>
+            </nav>
+        </div>
+        <div class="col-2">
+            <h6 class="time">
+                </h4>
+        </div>
+    </div>
+    <div id="introPanel">
+        <h2>Coding Quiz Challenge</h1>
+            <p>Try to answer the questions within the time limit. Keep in mind that incorrect answers will penalize your
+                score time by 10 seconds!</p>
+            <button type="button" class="btn btn-primary brand-bgcolor" id="start">Start Quiz</button>
+    </div>
+    <div id="QuizPanel">
+        In Quiz
+    </div>
+    <div id="gameoverPanel">
+        <h1>All done!</h1>
+        <h4>Your final score is: <span id="finalscore"></span></h4>
+        <form id="score-form" method="POST">
+            <label for="userInitials">Enter initials:</label>
+            <input type="text" placeholder="AB" name="userInitials" id="userInitials" />
+            <button type="button" class="btn btn-primary brand-bgcolor" id="userSubmit">Submit</button>
+        </form>
+    </div>
+    <div id="highscorePanel" class="highscorePanel">
+
+        <p>High Score Count: <span id="score-count">0</span></p>
+        <ul id="highscore-list"></ul>
+        <button type="button" class="btn btn-primary brand-bgcolor" id="goBack">Go Back</button>
+        <button type="button" class="btn btn-primary brand-bgcolor" id="clearHighScores">Clear Highscores</button>
+    </div>
+    <div id="footer"></div>
+
+
+    <script src="./script.js"></script>
+</body>
+
+</html>

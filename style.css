@@ -1,0 +1,20 @@
+/* .container {
+    padding: 0px;
+} */
+
+.brand-color {
+    color: blueviolet;
+}
+
+.brand-bgcolor {
+    background-color: blueviolet;    
+}
+
+.nav-links {
+    color: blueviolet;
+    padding-top: 0px;
+}
+
+#gameoverPanel {
+    display: none;
+}
