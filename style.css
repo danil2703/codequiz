@@ -1,20 +1,57 @@
+body {
+    padding: 10px;
+}
+
 /* .container {
     padding: 0px;
 } */
 
+#nohighscoreLink {
+    display: none;
+}
+
 .brand-color {
-    color: blueviolet;
+    color: #333399;
 }
 
 .brand-bgcolor {
-    background-color: blueviolet;    
+    background-color: #333399;
 }
 
 .nav-links {
-    color: blueviolet;
+    color: #333399;
     padding-top: 0px;
+}
+
+#quizPanel {
+    display: none;
+    padding: 1rem;
 }
 
 #gameoverPanel {
     display: none;
+}
+
+#highscorePanel {
+    display: none;
+}
+
+.btn-answers {
+    margin: .5rem;
+    border-color: #333399;
+}
+
+.btn-primary {
+    margin: .5rem;
+    border-color: #333399;
+    background-color: #333399;
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open > .dropdown-toggle.btn-primary {
+    background: #8080ff;
+    border-color: #8080ff;
+}
+
+.list-color {
+    background-color: #ccccff;
 }
