@@ -1,40 +1,38 @@
-var timeEl = document.querySelector(".time");
-var introEl = document.getElementById("introPanel");
-var gameoverEl = document.getElementById("gameoverPanel");
-var highscoreEl = document.getElementById("highscorePanel");
-var startBtn = document.getElementById("start");
+// main elements
+const timeEl = document.querySelector(".time");
+const introEl = document.getElementById("introPanel");
+const gameoverEl = document.getElementById("gameoverPanel");
+const highscoreEl = document.getElementById("highscorePanel");
+const startBtn = document.getElementById("start");
 const quizEl = document.getElementById("quizPanel");
-var finalScore = 0;
-var scoreEl = document.getElementById("finalscore");
-var userInitialsEl = document.querySelector("#userInitials");
-var highscorelink = document.getElementById("highscoreLink");
-var userSubmitBtn = document.getElementById("userSubmit");
-var goBackBtn = document.getElementById("goBack");
-var clearHighScoresBtn = document.getElementById("clearHighScores");
-let highscoreList = localStorage.highscoreList ? JSON.parse(localStorage.highscoreList) : [];
-var storedScoresGlobal = JSON.parse(localStorage.getItem("highscoreList"));
-let nohighscoreLinkEL = document.querySelector("#nohighscoreLink");
+const scoreEl = document.getElementById("finalscore");
+const userInitialsEl = document.querySelector("#userInitials");
+const highscorelink = document.getElementById("highscoreLink");
+const userSubmitBtn = document.getElementById("userSubmit");
+const goBackBtn = document.getElementById("goBack");
+const clearHighScoresBtn = document.getElementById("clearHighScores");
+const nohighscoreLinkEL = document.querySelector("#nohighscoreLink");
 const questionDivEl = document.querySelector("#questionDiv");
 const answerDivEl = document.querySelector("#answerDiv");
 const responseDivEl = document.querySelector("#responseDiv");
+const _max_scorelist = 5;
+const scoreForm = document.querySelector("#score-form");
+const highScoresListEl = document.querySelector("#highscore-list");
 
-// for high scores
-var scoreForm = document.querySelector("#score-form");
-var highscoreListHTML = document.querySelector("#highscore-list");
-
-
+var finalScore = 0;
 var highscores = [];
 var questionIndex = 0;
 var question;
 var choice, answer1, answer2, answer3, answer4;
 var correctCount = 0;
 var isGameOver = false;
-let timeleft = 60; // 60 seconds
+let timeleft = 60; // initial quiz is 60 seconds
 
+// this is the array of quiz questions
 var quizQuestions = [
   {
     // Question 1
-    question: "The condition in an 'if / else statement is enclosed within _____.",
+    question: "The condition in an 'if / else statement is enclosed within ______.",
     answers: {
       1: 'quotes',
       2: 'curly brackets',
@@ -56,7 +54,7 @@ var quizQuestions = [
   },
   {
     // Question 3
-    question: "A very useful tool during development and debugging for printing content to the debugger is _____.",
+    question: "A very useful tool during development and debugging for printing content to the debugger is ______.",
     answers: {
       1: 'JavaScript',
       2: 'terminal/bash',
@@ -78,7 +76,7 @@ var quizQuestions = [
   },
   {
     // Question 5
-    question: "String values must be enclosed within _____ when being assigned to variables",
+    question: "String values must be enclosed within ______ when being assigned to variables.",
     answers: {
       1: 'commas',
       2: 'curly brackets',
@@ -89,7 +87,7 @@ var quizQuestions = [
   }
 ];
 
-
+// This is the function that initializes the panels
 function initializePanels() {
   quizEl.style.display = "none";
   gameoverEl.style.display = "none";
@@ -103,29 +101,46 @@ function initializePanels() {
   timeleft = 60;
 }
 
+// This function is used to display the response for a certain interval until it disappears
+function displayResponse(response) {
+  let countdown = 15;
+  let timer;
+  var timerInterval = setInterval(function () {
+    countdown--;
+    if (countdown < 0) {
+      clearInterval(timerInterval);
+      responseDivEl.innerHTML = "";
+    } else {
+      responseDivEl.innerHTML = response;
+    }
+  }, 50);
+}
+
+// This is the function to check the user's choice against the correct answer in the array. Then display the response in the responseDiv. 
 function checkAnswer(event) {
   event.preventDefault();
+  var response = "";
   choice = event.target.value;
   console.log(`[checkAnswer] choice: ${choice}`);
   if (choice == quizQuestions[questionIndex]["correctAnswer"]) {
-    console.log(`[checkAnswer] Answer is correct!`);
     finalScore++;
-    responseDivEl.innerHTML = "<hr>Correct!"
+    response = "<hr><i><span id='responseCorrect'>Correct!</span></i>";
   } else {
-    responseDivEl.innerHTML = "<hr>Wrong!"
+    response = "<hr><i><span id='responseWrong'>Wrong!</span></i>";
+    // remove 10 seconds from timer if incorrect
     timeleft = timeleft - 10;
     if (timeleft >= 0) {
       timeEl.textContent = `Time: ${timeleft}`;
     }
   }
+  displayResponse(response);
   questionIndex++;
-  buildQuiz();
+  buildQuiz();  // call the quiz again to show the next question and choices.
 }
 
+// This is the function that will display each question and choices. 
 function buildQuiz() {
-  console.log(`[buildQuiz] - questionIndex: ${questionIndex}`);
   if (questionIndex >= quizQuestions.length) {
-    console.log(`[buildQuiz] - Questions done. Game Over`);
     questionIndex = 0;
     isGameOver = true;
   }
@@ -134,191 +149,103 @@ function buildQuiz() {
     quizEl.style.display = "block";
     setTime();
   }
+  // set question and the 4 choices in HTML
   question = quizQuestions[questionIndex]["question"];
   answer1 = quizQuestions[questionIndex]["answers"][1];
   answer2 = quizQuestions[questionIndex]["answers"][2];
   answer3 = quizQuestions[questionIndex]["answers"][3];
   answer4 = quizQuestions[questionIndex]["answers"][4];
-  questionDivEl.innerHTML = `<h3>${question}</h3>`;
+  questionDivEl.innerHTML = `<h3><strong>${question}</strong></h3>`;
   answerDivEl.innerHTML = `
       <div id='answerDiv' class="row">
-        <button name='answer1' value='1' class='btn btn-primary brand-bgcolor btn-answers text-left' onclick='checkAnswer(event)';>1 - ${answer1}</button>
+        <button name='answer1' value='1' class='btn btn-primary brand-bgcolor text-left' onclick='checkAnswer(event)';>1 - ${answer1}</button>
       </div>
       <div id='answerDiv' class="row">
-        <button name='answer2' value='2' class='btn btn-primary brand-bgcolor btn-answers text-left' onclick='checkAnswer(event)';>2 - ${answer2}</button>
+        <button name='answer2' value='2' class='btn btn-primary brand-bgcolor text-left' onclick='checkAnswer(event)';>2 - ${answer2}</button>
       </div>
       <div id='answerDiv' class="row">
-        <button name='answer3' value='3' class='btn btn-primary brand-bgcolor btn-answers text-left' onclick='checkAnswer(event)';>3 - ${answer3}</button>
+        <button name='answer3' value='3' class='btn btn-primary brand-bgcolor text-left' onclick='checkAnswer(event)';>3 - ${answer3}</button>
       </div>
       <div id='answerDiv' class="row">
-        <button name='answer4' value='4' class='btn btn-primary brand-bgcolor btn-answers text-left' onclick='checkAnswer(event)';>4 - ${answer4}</button>
+        <button name='answer4' value='4' class='btn btn-primary brand-bgcolor text-left' onclick='checkAnswer(event)';>4 - ${answer4}</button>
       </div>
     `
 }
 
-
 // This is used to set the timer
 function setTime() {
-  // var secondsLeft = 10;
-  introEl.style.display = "none";
+  // countdown every second starting from 60 seconds
   var timerInterval = setInterval(function () {
     timeleft--;
     timeEl.textContent = `Time: ${timeleft}`;
-
+    // if the time left is 0 or the game is over, clear the time and call the game over function
     if (timeleft === 0 || (isGameOver)) {
       clearInterval(timerInterval);
       gameOver();
     }
-
   }, 1000);
 }
 
-
+// This is called when the game is over. This handles the panels to hide and show.
 function gameOver() {
-  console.log("[gameOver]");
   timeEl.textContent = " ";
-
   quizEl.style.display = "none";
   gameoverEl.style.display = "block";
-  scoreEl.innerHTML = finalScore;
-  choice = "";
+  scoreEl.innerHTML = finalScore; // set the score to show the final score
+  choice = "";  // clear the choice variable in case user wants to go back and run game again
 }
 
-function getStoredScores() {
-  if (localStorage.highscores) {
-    let highscoreList = JSON.parse(localStorage.highscoresList);
-    console.log(`[getStoredScores] got highscoreList: ${highscoreList}`);
-    return highscoreList;
-  } else {
-    console.log(`[getStoredScores] got highscoreList: empty`);
-    return [];
-  }
-}
-
-
-
+// This is the function that stores score and user's initials to localStorage, to be able to be used in the highscores panel later.
 function saveUser() {
   event.preventDefault();
-  console.log("[saveUser]");
-  let storedScores = getStoredScores();
-  // console.log(`[saveUser] - initials: ${userInitialsEl.value}, finalScore: ${finalScore}`);
-  // highscoreList.push( userInitialsEl.value, finalScore);
-  // save to local storage
-  storedScores.push(userInitialsEl.value, finalScore);
-  console.log(`[saveUser] added user`);
-  console.log(`[saveUser] storedScores: ${storedScores}`);
-  localStorage.highscoreList = JSON.stringify(storedScores);
-  // console.log(`[saveUser] ${localStorage.highscoreList}`);
-  gethighscores();
+  // get highscores from local storage and store in array, set to empty if not in localStorage
+  const highScores = JSON.parse(localStorage.getItem("highScores")) ? JSON.parse(localStorage.highScores) : [];
+  // array to hold the score and initials
+  let score = {
+    score: finalScore,
+    name: userInitialsEl.value
+  };
+  highScores.push(score);
+  highScores.sort((a, b) => b.score - a.score); // sorting highscores list in array descending
+  highScores.splice(_max_scorelist);  // Currently set a limit to keep in array. If more than the limit, the lower one gets dropped off
+  // store highscores back into localStorage
+  localStorage.setItem('highScores', JSON.stringify(highScores))
+  gethighscores();  // call next function to show the highscores
 }
 
+// This is to show the highscores list. Other panels are hidden
 function gethighscores() {
   introEl.style.display = "none";
   quizEl.style.display = "none";
   gameoverEl.style.display = "none";
   highscorelink.style.display = "none";
   highscoreEl.style.display = "block";
-  nohighscoreLinkEL.style.display = "block";
-  // Get stored scores from localStorage
-  // Parsing the JSON string to an object
-  var storedScores = JSON.parse(localStorage.getItem("highscoreList"));
-
-  // If scores were retrieved from localStorage, update the highscores array to it
-  if (storedScores !== null) {
-    highscoresList = storedScores;
-  }
-  console.log(`[gethighscores] highscoresList: ${highscoresList}`);
-
+  nohighscoreLinkEL.style.display = "block";  // to not show the highscore link
   // Render scores to the DOM
   renderHighScore();
-  // highscoreInit();
   goBackBtn.addEventListener("click", initializePanels);
   clearHighScoresBtn.addEventListener("click", clearHighScores);
 }
 
-
-initializePanels();
-
-
-// highscoreInit();
-
 function renderHighScore() {
-  // Clear todoList element and update todoCountSpan
-  var renderhighscoreList = JSON.parse(localStorage.getItem("highscoreList"));
-  if (renderhighscoreList === null) {
-    renderhighscoreList = ["User: empty", ];
-  }
-  console.log(`[renderHighScore] highscores: ${renderhighscoreList}`);
-  console.log(`[renderHighScore] highscores length: ${renderhighscoreList.length}`);
-  highscoreListHTML.innerHTML = "";
+  // get highScores from localStorage, if empty set empty array
+  const renderhighScores = JSON.parse(localStorage.getItem("highScores")) || [];
 
-  // Render a new li for each score
-  // for (var i = 0; i < highscores.length; i++) {
-  //   var highscore = highscores[i];
-
-  //   var li = document.createElement("li");
-  //   li.textContent = highscore;
-  //   li.setAttribute("data-index", i);
-
-  //   // li.appendChild(button);
-  //   highscoreListHTML.appendChild(li);
-  // }
-
-  // highscoreList.forEach(
-  //   function (item, index) {
-  //     highscoreListHTML.innerHTML +=
-  //       `<li id='${index}'>${item}`;
-  //   }
-  // )
-  highscoreListHTML.innerHTML += `<li class='list-group-item list-group-item-primary list-color'>${renderhighscoreList}`;
-  console.log(`[renderHighScore] highscoreListHTML: ${highscoreListHTML.innerHTML}`);
+  // setting the innerhtml for the highscores list. map is returning the output of each item that is joined in one string
+  highScoresListEl.innerHTML = renderhighScores.map(
+    score => {
+      return `<li class='high-score'>${score.name} - ${score.score}</li>`;
+    }
+  ).join("");
 }
 
-function highscoreInit() {
-  // event.preventDefault();
-  // console.log("inside highscoreInit");
-
-}
-
-// function storeHighScore() {
-//   console.log("inside storeHighScore");
-//   // Stringify and set "highscores" key in localStorage to highscores array
-//   localStorage.setItem("highscores", JSON.stringify(highscores));
-// }
-
-/*
-// When form is submitted...
-scoreForm.addEventListener("submit", function (event) {
-  event.preventDefault();
-
-  var userInitials = userInitials.value.trim();
-
-  // Return from function early if submitted userinitials is blank
-  if (userInitials === "") {
-    return;
-  }
-
-  // Add new initials to highscores array, clear the input
-  highscores.push(userInitials);
-  userInitials.value = "";
-
-  // Store updated scores in localStorage, re-render the list
-  storeHighScore();
-  renderHighScore();
-});
-
-// When a element inside of the highscoreList is clicked...
-highscoreListHTML.addEventListener("click", function (event) {
-  var element = event.target;
-
-});
-*/
-
-// This is used to clear the stored high scores after confirming
+// This is used to clear the stored high scores after confirming. Then calls the renderHighScore again to refresh the list.
 function clearHighScores() {
   event.preventDefault();
   confirm('Are you sure you want to clear the scores?')
-  delete localStorage.highscoreList;
-  console.log(`[clearHighScores] - deleted highscoreList`);
+  delete localStorage.highScores;
   renderHighScore();
 }
+
+// This is the starting function that initializes the panels.
+initializePanels();

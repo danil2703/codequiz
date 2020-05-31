@@ -20,80 +20,73 @@
 </head>
 
 <body>
-
-    <div class="row" style="border: darkblue 1px solid;">
-        <div class="col-10" style="border: darkblue 1px solid;">
-            <nav class="navbar navbar-light bg-light">
-                <a id="highscoreLink" class="nav-links" href="javascript:gethighscores();">View High Scores</a>
-                <p id="nohighscoreLink" class="nav-links"></p>
-            </nav>
-        </div>
-        <div class="col-2">
-            <h6 class="time"></h6>
-        </div>
-    </div>
-    <div id="introPanel">
-        <div class="container" style="border: black 1px solid;">
-            <h2>Coding Quiz Challenge</h2>
-            <div class="row ">
-                Try to answer the questions within the time limit. Keep in mind that incorrect answers will
-                penalize your score time by 10 seconds!
-            </div>
-            <div class="row justify-content-center">
-                <button type="button" class="btn btn-primary brand-bgcolor" id="start">Start Quiz</button>
-            </div>
-        </div>
-    </div>
-    <div id="quizPanel" class="quizPanel">
-        <div class="container" style="border: black 1px solid;">
-            <div id='questionDiv' class="row">
-                <h3>question</h3>
-            </div>
-            <div id='answerDiv'>
-
-                <div class="row">
-
-                    <button name='answer1' value='1' class='btn btn-primary brand-bgcolor btn-answers'>1 -
-                        answer1</button>
+    <div class="container">
+        <!-- Panel for the highscore link and timer -->
+        <div id="topPanel">
+            <div class="row">
+                <div class="col-10 bgwhite">
+                    <nav class="navbar navbar-light bg-light">
+                        <a id="highscoreLink" class="nav-links" href="javascript:gethighscores();">View High Scores</a>
+                        <p id="nohighscoreLink" class="nav-links"></p>
+                    </nav>
                 </div>
-                <div class="row">
-                    <button name='answer2' value='2' class='btn btn-primary brand-bgcolor btn-answers'>2-
-                        answer2</button>
-                </div>
-                <div class="row">
-                    <button name='answer3' value='3' class='btn btn-primary brand-bgcolor btn-answers'>3 -
-                        answer3</button>
-                </div>
-                <div class="row">
-                    <button name='answer4' value='4' class='btn btn-primary brand-bgcolor btn-answers'>4 -
-                        answer4</button>
+                <div class="col-2">
+                    <h6 class="time"></h6>
                 </div>
             </div>
-            <div id='responseDiv'>
+        </div>
+        <!-- Panel to show the intro -->
+        <div id="introPanel">
+            <div class="jumbotron text-center">
+                <h2>Coding Quiz Challenge</h2>
+                <div class="row justify-content-center">
+                    Try to answer the questions within the time limit. Keep in mind that incorrect answers will
+                    penalize your score time by 10 seconds!
+                </div>
+                <div class="row justify-content-center">
+                    <button id="start" type="button" class="btn btn-primary brand-bgcolor">Start Quiz</button>
+                </div>
+
+            </div>
+        </div>
+        <!-- Panel for the quiz area. Only display after user clicks Start -->
+        <div id="quizPanel" class="quizPanel">
+            <div class="container quizContainer">
+                <div id='questionDiv' class="row">
+                    <h3>question</h3>
+                </div>
+                <!-- div to show the answers to each question. Only display when question is displayed -->
+                <div id='answerDiv'>
+                </div>
+                <!-- div to show the response. Only display after user clicks answer -->
+                <div id='responseDiv'>
+                </div>
+            </div>
+        </div>
+        <!-- Panel to prompt for User's initials. Only display when the game is over -->
+        <div id="gameoverPanel" class="highscorePanel">
+            <div class="container">
+                <h2>All done!</h2>
+                <h4>Your final score is: <span id="finalscore"></span></h4>
+                <form id="score-form" method="POST">
+                    <label for="userInitials">Enter initials:</label>
+                    <input id="userInitials" type="text" placeholder="AB" name="userInitials" />
+                    <button id="userSubmit" onClick="saveUser(event)" type="button"
+                        class="btn btn-primary brand-bgcolor">Submit</button>
+                </form>
+            </div>
+        </div>
+        <!-- Panel to show the highscores. Only display when user clicks High Scores link or show after user enters initials -->
+        <div id="highscorePanel" class="highscorePanel">
+            <div class="container" style="border: black 1px solid;">
+                <h2>High scores</h2>
+                <ul id="highscore-list" class="list-group"></ul>
+                <button type="button" class="btn btn-primary brand-bgcolor" id="goBack">Go Back</button>
+                <button type="button" class="btn btn-primary brand-bgcolor" id="clearHighScores">Clear
+                    Highscores</button>
             </div>
         </div>
     </div>
-    <div id="gameoverPanel" class="highscorePanel">
-        <h2>All done!</h2>
-        <h4>Your final score is: <span id="finalscore"></span></h4>
-        <form id="score-form" method="POST">
-            <label for="userInitials">Enter initials:</label>
-            <input id="userInitials" type="text" placeholder="AB" name="userInitials" />
-            <button id="userSubmit" onClick="saveUser(event)" type="button"
-                class="btn btn-primary brand-bgcolor">Submit</button>
-        </form>
-    </div>
-    <div id="highscorePanel" class="highscorePanel">
-        <div class="container" style="border: black 1px solid;">
-            <h2>High scores</h2>
-            <ul id="highscore-list" class="list-group"></ul>
-            <button type="button" class="btn btn-primary brand-bgcolor" id="goBack">Go Back</button>
-            <button type="button" class="btn btn-primary brand-bgcolor" id="clearHighScores">Clear Highscores</button>
-        </div>
-    </div>
-    <div id="footer"></div>
-
-
     <script src="./script.js"></script>
 </body>
 
