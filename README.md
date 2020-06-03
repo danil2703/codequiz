@@ -10,5 +10,9 @@ The project was to build a timed code quiz with multiple-choice questions. This 
 The user will need to answer multiple questions about JavaScript concepts against a timer.
 For any incorrect answer, ten seconds will be deducted from the time. When all questions are answered or the timer reaches 0, the game is over and then the user can save their initials and score.
 
+The following animation demonstrates the application functionality:
+
+![code quiz](./Assets/04-web-apis-homework-demo.gif)
+
 ## What I Learned
 This project allowed me to incorporate HTML, Javascript, CSS and Bootstrap. It allowed me to understand arrays manipulation better and incorporate localStorage. I had some challenges getting the highscores stored and retrieved but then I learned to use map.
