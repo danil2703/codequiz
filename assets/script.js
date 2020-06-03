@@ -242,9 +242,11 @@ function renderHighScore() {
 // This is used to clear the stored high scores after confirming. Then calls the renderHighScore again to refresh the list.
 function clearHighScores() {
   event.preventDefault();
-  confirm('Are you sure you want to clear the scores?')
-  delete localStorage.highScores;
-  renderHighScore();
+  let result = confirm('Are you sure you want to clear the scores?')
+  if (result) {
+    delete localStorage.highScores;
+    renderHighScore();
+  }
 }
 
 // This is the starting function that initializes the panels.
