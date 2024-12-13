@@ -360,11 +360,6 @@ function setTime() {
   var timerInterval = setInterval(function () {
     timeleft--;
     timeEl.textContent = `Time: ${timeleft}`;
-    // if the time left is 0 or the game is over, clear the time and call the game over function
-    if (timeleft === 0 || (isGameOver)) {
-      clearInterval(timerInterval);
-      gameOver();
-    }
   }, 1000);
 }
 
