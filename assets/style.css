@@ -6,6 +6,20 @@ body {
     background-color: white;
 }
 
+.jumbotron {
+    font-size: 1.5rem;
+}
+
+.topPanel, .navbar, .time, .responseDiv {
+    display: none;
+}
+
+.congrats {
+    width: 100%;
+    max-width: 500px;
+    margin: 20px 0;
+}
+
 .brand-color {
     color: #333399;
 }
@@ -27,9 +41,15 @@ body {
 /* hide quiz panel and set padding */
 #quizPanel {
     display: none;
-    padding: 1rem;
-    margin-left: 5rem;
-    margin-right: 5rem;
+}
+
+#imageDiv {
+    margin: 24px 0;
+}
+
+#imageDiv img {
+    max-width: 500px;
+    width: 100%;
 }
 
 /* this is for the buttons */
@@ -37,6 +57,7 @@ body {
     margin: .5rem;
     border-color: #333399;
     background-color: #333399;
+    font-size: 1.25rem;
 }
 
 /* this is for the button colours including hover */
@@ -46,7 +67,6 @@ body {
 }
 
 .highscorePanel {
-    width: 50%;
     align-content: center;
 }
 

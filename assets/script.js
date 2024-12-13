@@ -14,6 +14,7 @@ const clearHighScoresBtn = document.getElementById("clearHighScores");
 const nohighscoreLinkEL = document.querySelector("#nohighscoreLink");
 const questionDivEl = document.querySelector("#questionDiv");
 const answerDivEl = document.querySelector("#answerDiv");
+const imageDivEl = document.querySelector("#imageDiv");
 const responseDivEl = document.querySelector("#responseDiv");
 const _max_scorelist = 5;
 const scoreForm = document.querySelector("#score-form");
@@ -32,59 +33,230 @@ let timeleft = 60; // initial quiz is 60 seconds
 var quizQuestions = [
   {
     // Question 1
-    question: "The condition in an 'if / else statement is enclosed within ______.",
+    question: "Какой герой изображен на картинке?",
+    image: '01.jpeg',
     answers: {
-      1: 'quotes',
-      2: 'curly brackets',
-      3: 'parentheses',
-      4: 'square brackets'
+      1: 'Void Spirit',
+      2: 'Dark Seer',
+      3: 'Void Seer',
+      4: 'Dark Spirit'
     },
-    correctAnswer: '3'
+    correctAnswer: '2'
   },
   {
     // Question 2
-    question: "Commonly used data types DO NOT include: ",
+    question: "Угадай героя по эмоджи",
+    image: '02.png',
     answers: {
-      1: 'strings',
-      2: 'booleans',
-      3: 'alerts',
-      4: 'numbers'
+      1: 'Riki',
+      2: 'Dark Willow',
+      3: 'Vengeful Spirit',
+      4: 'Puck'
     },
     correctAnswer: '3'
   },
   {
     // Question 3
-    question: "A very useful tool during development and debugging for printing content to the debugger is ______.",
+    question: "Что даёт Aghanim`s Scepter у Enigma?",
     answers: {
-      1: 'JavaScript',
-      2: 'terminal/bash',
-      3: 'for loops',
-      4: 'console.log'
+      1: 'Увеличивает количество эйдолонов на 5 и их урон на 50 ед.',
+      2: 'Ульта притягивает врагов в радиусе 1000',
+      3: 'Увеличивает урон наносимый третьего скилла на 15%',
+      4: 'Ульта наносит доп урон, 5% от макс. здоровья жертвы'
     },
-    correctAnswer: '4'
+    correctAnswer: '2'
   },
   {
     // Question 4
-    question: "Arrays in JavaScript can be used to store ______.",
+    question: "Какие International выйграли Team Spirit?",
     answers: {
-      1: 'numbers and strings',
-      2: 'other arrays',
-      3: 'booleans',
-      4: 'all of the above'
+      1: '11 и 13',
+      2: '11 и 12',
+      3: '10 и 13',
+      4: '12 и 10'
+    },
+    correctAnswer: '1'
+  },
+  {
+    // Question 5
+    question: "Что позволяют делать Boots of Travel 2",
+    answers: {
+      1: 'Ускоряют время телепортации',
+      2: 'Позволяют телепортироваться на героев',
+      3: 'Увеличивают скорость передвижения по сравнению с Boots of Travel на 20',
+      4: 'Всё вышеперечисленное'
     },
     correctAnswer: '4'
   },
   {
-    // Question 5
-    question: "String values must be enclosed within ______ when being assigned to variables.",
+    // Question 6
+    question: "Сколько стоит танго?",
     answers: {
-      1: 'commas',
-      2: 'curly brackets',
-      3: 'quotes',
-      4: 'parentheses'
+      1: '120',
+      2: '90',
+      3: '110',
+      4: '100'
+    },
+    correctAnswer: '2'
+  },
+  {
+    // Question 7
+    question: "Определи героя по сборке от про игрока",
+    image: '07.png',
+    answers: {
+      1: 'Witch Doctor',
+      2: 'Tinker',
+      3: 'Silencer',
+      4: 'Shadow Demon'
+    },
+    correctAnswer: '4'
+  },
+  {
+    // Question 8
+    question: "Какой из этих предметов не дает эффект развеивания?",
+    answers: {
+      1: `Eul's Screpter of Divinity`,
+      2: 'Lotus Orb',
+      3: 'Solar Crest',
+      4: 'Guardian Greaves'
     },
     correctAnswer: '3'
-  }
+  },
+  {
+    // Question 9
+    question: "Угадай героя по вражденной способности: Герой постоянно горит, каждую секунду нанося урон врагам поблизости",
+    answers: {
+      1: 'Dawnbreaker',
+      2: 'Phoenix',
+      3: 'Ember Spirit',
+      4: 'Lina'
+    },
+    correctAnswer: '2'
+  },
+  {
+    // Question 10
+    question: "Сколько процентов шанс оглушения у Spirit Breaker? (без таланта на увелечение шанса)",
+    answers: {
+      1: '20',
+      2: '52',
+      3: '17',
+      4: '15'
+    },
+    correctAnswer: '3'
+  },
+  {
+    // Question 11
+    question: "Сколько стоит мидас?",
+    answers: {
+      1: '2100',
+      2: '2200',
+      3: '1950',
+      4: '2250'
+    },
+    correctAnswer: '2'
+  },
+  {
+    // Question 12
+    question: "Какая из этих способностей не работает сквозь бкб?",
+    answers: {
+      1: 'Ульт праймал биста',
+      2: 'Ульт трента',
+      3: 'Ульт пуджа',
+      4: 'Ульт наги сирены',
+    },
+    correctAnswer: '4'
+  },
+  {
+    // Question 13
+    question: "Какой из этих предметов не уменьшает восстановление здоровья противникам?",
+    answers: {
+      1: `Shiva's Guard`,
+      2: 'Urn of Shadow',
+      3: 'Eye of Skadi',
+      4: 'Orb of Corrosion',
+    },
+    correctAnswer: '2'
+  },
+  {
+    // Question 14
+    question: "От какого из этих предметов нельзя защититься линкой?",
+    answers: {
+      1: 'Scythe of Vyse',
+      2: 'Gleipnir',
+      3: 'Nullifaer',
+      4: 'Silver Edge',
+    },
+    correctAnswer: '4'
+  },
+  {
+    // Question 15
+    question: "Определи героя по сборке про игрока",
+    image: '15.png',
+    answers: {
+      1: 'Kunkka',
+      2: 'Doom',
+      3: 'Axe',
+      4: 'Sand King',
+    },
+    correctAnswer: '2'
+  },
+  {
+    // Question 16
+    question: "У кого из этих героев больший процент побед на кери роли в текущем патче?",
+    answers: {
+      1: 'Morphling',
+      2: 'Dragon Knight',
+      3: 'Alchemist',
+      4: 'Spectre',
+    },
+    correctAnswer: '3'
+  },
+  {
+    // Question 17
+    question: "Определи героя по сборке про игрока",
+    image: '17.png',
+    answers: {
+      1: 'Muerta',
+      2: 'Hoodwink',
+      3: 'Pugna',
+      4: 'Batrider',
+    },
+    correctAnswer: '1'
+  },
+  {
+    // Question 18
+    question: "Какой максимальный рейтинг в дота 2 на данный момент?",
+    answers: {
+      1: '16 к +',
+      2: '15 к +',
+      3: '14 к +',
+      4: '13 к +'
+    },
+    correctAnswer: '1'
+  },
+  {
+    // Question 19
+    question: "Какой из этих предметов не дает ауру?",
+    answers: {
+      1: 'Shivas Guard',
+      2: 'Assault Cuirass',
+      3: 'Crimson Guard',
+      4: 'Guardian Greves'
+    },
+    correctAnswer: '3'
+  },
+  {
+    // Question 20
+    question: "Сколько призовых у данного игрока?",
+    image: '20.jpg',
+    answers: {
+      1: '5000$ с пари матч',
+      2: 'Банка пива',
+      3: 'У самурая нет цели, только путь',
+      4: 'Всё впереди! С Днем Рождения!'
+    },
+    correctAnswer: '4'
+  },
 ];
 
 // This is the function that initializes the panels
@@ -124,9 +296,7 @@ function checkAnswer(event) {
   console.log(`[checkAnswer] choice: ${choice}`);
   if (choice == quizQuestions[questionIndex]["correctAnswer"]) {
     finalScore++;
-    response = "<hr><i><span id='responseCorrect'>Correct!</span></i>";
   } else {
-    response = "<hr><i><span id='responseWrong'>Wrong!</span></i>";
     // remove 10 seconds from timer if incorrect
     timeleft = timeleft - 10;
     if (timeleft >= 0) {
@@ -151,11 +321,15 @@ function buildQuiz() {
   }
   // set question and the 4 choices in HTML
   question = quizQuestions[questionIndex]["question"];
+  image = quizQuestions[questionIndex].image;
   answer1 = quizQuestions[questionIndex]["answers"][1];
   answer2 = quizQuestions[questionIndex]["answers"][2];
   answer3 = quizQuestions[questionIndex]["answers"][3];
   answer4 = quizQuestions[questionIndex]["answers"][4];
   questionDivEl.innerHTML = `<h3><strong>${question}</strong></h3>`;
+  
+  renderImage(image);
+
   answerDivEl.innerHTML = `
       <div id='answerDiv' class="row">
         <button name='answer1' value='1' class='btn btn-primary brand-bgcolor text-left' onclick='checkAnswer(event)';>1 - ${answer1}</button>
@@ -170,6 +344,14 @@ function buildQuiz() {
         <button name='answer4' value='4' class='btn btn-primary brand-bgcolor text-left' onclick='checkAnswer(event)';>4 - ${answer4}</button>
       </div>
     `
+}
+
+function renderImage(image) {
+  if (image) {
+    imageDivEl.innerHTML = `<img src="assets/images/${image}">`;
+  } else {
+    imageDivEl.innerHTML = '';
+  }
 }
 
 // This is used to set the timer

@@ -29,13 +29,14 @@
         <!-- Panel to show the intro -->
         <div id="introPanel">
             <div class="jumbotron text-center">
-                <h2>Coding Quiz Challenge</h2>
+                <h2>Поздравляем, Павел! У тебя День Рождения и вы апнули 2 к в доте!</h2>
+                <img class="congrats" src="assets/images/congrats.jpg">
                 <div class="row justify-content-center">
-                    Try to answer the questions within the time limit. Keep in mind that incorrect answers will
-                    penalize your score time by 10 seconds!
+                    Пришло время проверить, насколько хорошо ты знаешь эту игру, или тебя забустили тимейты.
+                    Ответь на все 20 вопросов и получи приз.
                 </div>
                 <div class="row justify-content-center">
-                    <button id="start" type="button" class="btn btn-primary brand-bgcolor">Start Quiz</button>
+                    <button id="start" type="button" class="btn btn-primary brand-bgcolor">Начать</button>
                 </div>
 
             </div>
@@ -45,6 +46,8 @@
             <div class="container quizContainer">
                 <div id='questionDiv' class="row">
                     <h3>question</h3>
+                </div>
+                <div id='imageDiv'>
                 </div>
                 <!-- div to show the answers to each question. Only display when question is displayed -->
                 <div id='answerDiv'>
@@ -57,14 +60,9 @@
         <!-- Panel to prompt for User's initials. Only display when the game is over -->
         <div id="gameoverPanel" class="highscorePanel">
             <div class="container">
-                <h2>All done!</h2>
-                <h4>Your final score is: <span id="finalscore"></span></h4>
-                <form id="score-form" method="POST">
-                    <label for="userInitials">Enter initials:</label>
-                    <input id="userInitials" type="text" placeholder="AB" name="userInitials" />
-                    <button id="userSubmit" onClick="saveUser(event)" type="button"
-                        class="btn btn-primary brand-bgcolor">Submit</button>
-                </form>
+                <h2>Конец!</h2>
+                <h4>Твой результат: <span id="finalscore"></span></h4>
+                <img class="congrats" src="assets/images/sdr.jpg">
             </div>
         </div>
         <!-- Panel to show the highscores. Only display when user clicks High Scores link or show after user enters initials -->
